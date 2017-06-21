@@ -9,29 +9,29 @@
 #
 #This task is the Problem B of the practice contest of "AtCoder"(http://practice.contest.atcoder.jp/tasks/practice_2).
 #########################
-
-[N, Q] = map(int, raw_input().split())
+import sys
+[N, Q] = list(map(int, input().split()))
 Data = [chr(i) for i in range(65, 65+N)]
-cal_time = 0
 def QuickSort(data, start, end):
-	global cal_time
 	n = end - start + 1
-	pivot = int(n/2.0)
+	pivot = int((end+start)/2.0)
 	P = data[pivot]
 	light = []
 	heavy = []
+	
 	for i in range(start, pivot):
-		cal_time += 1
-		print "? "+data[i] + " " + data[pivot]
-		ans = raw_input()
+		print("? "+data[i] + " " + data[pivot], flush = True)
+		sys.stdout.flush()
+		ans = input()
 		if ans == '>':
 			heavy.append(data[i])
 		else:
 			light.append(data[i])
+			
 	for i in range(pivot+1, end+1):
-		cal_time += 1
-		print "? "+data[pivot] + " " + data[i]
-		ans = raw_input()
+		print("? "+data[pivot] + " " + data[i], flush = True)
+		sys.stdout.flush()
+		ans = input()
 		if ans == '<':
 			heavy.append(data[i])
 		else:
@@ -41,7 +41,7 @@ def QuickSort(data, start, end):
 	
 	data[start:start+l_length] = light
 	data[start+l_length] = P
-	data[start+l_length+1:end+1] = heavy
+	data[start+l_length+1:start+l_length+h_length+1] = heavy
 	
 	if l_length >= 2:
 		data = QuickSort(data, start, start+l_length-1)
@@ -49,6 +49,4 @@ def QuickSort(data, start, end):
 		data = QuickSort(data, start+l_length+1, end)
 	return data
 	
-print QuickSort(Data, 0, N-1)
-if cal_time < Q:
-	print "You complete the sorting task! You are GENIUS!!"
+print("! " + "".join(QuickSort(Data, 0, N-1)))
